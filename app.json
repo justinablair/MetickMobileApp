@@ -4,12 +4,12 @@
     "slug": "ToDoAppV2",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/metick-icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#171B1B"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
