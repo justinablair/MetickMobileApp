@@ -1,38 +1,60 @@
-import {
-  Text,
-  View,
-  Pressable,
-  Image,
-  ImageBackground,
-} from "react-native";
-import AppStyles from "../styles/AppStyles";
+//Main dependencies
 import React from "react";
-
-import Notification from "../assets/notification.png";
-
+import { Text, View, Pressable, Image, ImageBackground } from "react-native";
+//Styles + Images
+import AppStyles from "../styles/AppStyles";
+import NotificationIcon from "../assets/notification-icon.png";
 
 export default function Main({ navigation }) {
-
   const background = require("../assets/splash.png");
   return (
-    <ImageBackground source={background} style={AppStyles.imageContainer}>
-      <Image source={Notification} style={AppStyles.notification} />
+    <ImageBackground
+      source={background}
+      style={[AppStyles.imageContainer, AppStyles.centerContent]}
+    >
+      <Image source={NotificationIcon} style={AppStyles.notificationIcon} />
 
-      <Pressable onPress={() => navigation.navigate("Login")} style={AppStyles.mainSignUpButton} >
-        <Text style={AppStyles.continueText}>I already have an account</Text>
+      <Pressable
+        onPress={() => navigation.navigate("Login")}
+        style={[
+          AppStyles.mainScreenSignUpButton,
+          AppStyles.absolutePosition,
+          AppStyles.mediumHeight,
+          AppStyles.largeWidth
+        ]}
+      >
+        <Text
+          style={[
+            AppStyles.continueText,
+            AppStyles.centerContent,
+            AppStyles.absolutePosition,
+            AppStyles.largeWidth,
+          ]}
+        >
+          I already have an account
+        </Text>
       </Pressable>
 
-      <Pressable onPress={() => navigation.navigate("SignUp")} style={AppStyles.mainContinueButton}>
-        <Text style={AppStyles.continueText}>Get Started</Text>
+      <Pressable
+        onPress={() => navigation.navigate("SignUp")}
+        style={[
+          AppStyles.mainScreenContinueButton,
+          AppStyles.absolutePosition,
+          AppStyles.mediumHeight,
+          AppStyles.largeWidth
+        ]}
+      >
+        <Text
+          style={[
+            AppStyles.continueText,
+            AppStyles.centerContent,
+            AppStyles.absolutePosition,
+            AppStyles.largeWidth,
+          ]}
+        >
+          Get Started
+        </Text>
       </Pressable>
-
-      <View></View>
-
-      {/* <InlineTextResetPasswordButton
-        text="Login"
-        style={AppStyles.rowContainer}
-        onPress={login}
-      /> */}
     </ImageBackground>
   );
 }

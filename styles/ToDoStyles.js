@@ -1,23 +1,80 @@
 import { StyleSheet } from "react-native";
 
+//Root colors for ToDo screen and modal in one place
+const black = "#000";
+const white = "#ffff";
+const pink = "#ff788b";
+const grey = "#A9A9A9";
+
 export default StyleSheet.create({
+  /*Containers */
   modalContainer: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: white,
     padding: 16,
   },
+
   rowContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
     alignSelf: "stretch",
+    flexDirection: "row",
     marginVertical: 4,
   },
 
   todoContainer: {
     margin: 20,
+  },
+
+  /*Text styles */
+  header: {
+    alignSelf: "center",
+    fontSize: 20,
+  },
+
+  modalHeader: {
+    alignSelf: "center",
+    fontSize: 20,
+    marginBottom: 40,
+    fontWeight: "700",
+  },
+
+  toDoHeader: {
+    color: black,
+    fontSize: 44,
+    fontWeight: "700",
+    position: "absolute",
+    top: 80,
+    textAlign: "left",
+    width: "100%",
+  },
+
+  modalTextInput: {
+    alignSelf: "stretch",
+    borderBottomWidth: 2,
+    marginVertical: 8,
+    padding: 8,
+  },
+
+  modalDarkTextInput: {
+    borderBottomColor: black,
+  },
+
+  addText: {
+    top: 540,
+    left: 1,
+    color: black,
+    fontWeight: "bold",
+  },
+
+  verifyEmailHeader: {
+    top: "60%",
+    width: "100%",
+    fontSize: 18,
+    textAlign: "center",
+  },
+
+  /*Spacing */
+  justifyAndAlign: {
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   toDoFillSpace: {
@@ -34,87 +91,59 @@ export default StyleSheet.create({
     marginLeft: 16,
   },
 
-  header: {
-    fontSize: 20,
-    alignSelf: "center",
-  },
-
-  modalHeader: {
-    fontSize: 20,
-    alignSelf: "center",
-    marginBottom: 40,
-    fontWeight: "700",
-  },
-
-  toDoHeader: {
-    // fontSize: 20,
-    // alignSelf: "center",
-    position: "absolute",
-    top: 80,
-    fontSize: 44,
-    fontWeight: "700",
-    color: "#000",
-    textAlign: "left",
-    width: "100%",
-  },
-
-  modalTextInput: {
-    alignSelf: "stretch",
-    padding: 8,
-    borderBottomWidth: 2,
-    marginVertical: 8,
-  },
-
-  modalDarkTextInput: {
-    borderBottomColor: "#000000",
-  },
-
+  /*Pressable and Buttons */
   inlineTextButton: {
-    color: "#000",
+    color: black,
   },
   pressedInlineTextButton: {
-    color: "#FF788B",
+    color: pink,
     opacity: 0.6,
+  },
+
+  resendEmailButton: {
+    top: "50%",
   },
 
   todoOutline: {
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: "#ff788b",
-    backgroundColor: "white",
-    width: 344,
+    borderColor: pink,
+    backgroundColor: white,
     height: 61,
+    width: 344,
   },
 
   mock: {
-    // position: "absolute",
-    // top: 80,
-    // fontSize: 44,
-    // fontWeight: "700",
-    // color: "#000",
-    // textAlign: "left",
-    // width: "100%",
     paddingTop: 150,
+  },
+
+  /* State change for user typing */
+  inputOnFocus: {
+    borderColor: pink,
+    borderBottomWidth: 2,
+    width: 344,
+  },
+
+  inputOnBlur: {
+    borderColor: grey,
+    borderBottomWidth: 2,
+    width: 344,
+  },
+
+  /*Images */
+  iconDimensions: {
+    width: 30,
+    height: 30,
   },
 
   settingsIcon: {
     marginLeft: 20,
-    width: 30,
-    height: 30,
   },
   logoutIcon: {
     marginLeft: 290,
-    width: 30,
-    height: 30,
   },
   addIcon: {
     top: 550,
-  },
-  addText: {
-    top: 540,
-    left: 1,
-    color: "black",
-    fontWeight: "bold",
   },
 
   waveIcon: {
@@ -123,21 +152,9 @@ export default StyleSheet.create({
     width: 50,
     height: 50,
   },
-  inputOnFocus: { borderColor: "#ff788b", borderBottomWidth: 2, width: 344 },
-  inputOnBlur: { borderColor: "#A9A9A9", borderBottomWidth: 2, width: 344 },
 
-  verifyEmailHeader: {
-    top: "60%",
-    width: "100%",
-    fontSize: 18,
-    textAlign: "center",
-  },
   emailIcon: {
     top: "50%",
     marginLeft: 20,
-  },
-
-  resendEmailButton: {
-    top: "50%",
   },
 });

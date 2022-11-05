@@ -1,25 +1,17 @@
-import { Button, View, TextInput, Text } from "react-native";
+//Main dependencies
 import React from "react";
-import AppStyles from "../styles/AppStyles";
+import { Button, View, TextInput, Text } from "react-native";
+//Database
 import { auth, db } from "../firebase";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  writeBatch,
-} from "firebase/firestore";
-import {
-  signOut,
-  updatePassword,
-  signInWithEmailAndPassword,
-  deleteUser,
-} from "firebase/auth";
+import {collection,query,where,getDocs,writeBatch,} from "firebase/firestore";
+import {signOut, updatePassword,signInWithEmailAndPassword, deleteUser,} from "firebase/auth";
+//Styles
+import AppStyles from "../styles/AppStyles";
 
 export default function ManageAccount({ navigation }) {
-  let [newPassword, setNewPassword] = React.useState("");
-  let [currentPassword, setCurrentPassword] = React.useState("");
   let [errorMessage, setErrorMessage] = React.useState("");
+  let [currentPassword, setCurrentPassword] = React.useState("");
+  let [newPassword, setNewPassword] = React.useState("");
 
   let [focusCurrentPassword, setFocusCurrentPassword] = React.useState("");
   let [focusNewPassword, setFocusNewPassword] = React.useState("");
@@ -57,7 +49,7 @@ export default function ManageAccount({ navigation }) {
         .then((userCredential) => {
           const user = userCredential.user;
 
-          // Get all todos for user and delete
+          // Get all meticks for user and batch delete
           let batch = writeBatch(db);
           const q = query(
             collection(db, "todos"),
@@ -86,11 +78,21 @@ export default function ManageAccount({ navigation }) {
 
   return (
     <View>
-      <Text style={AppStyles.settingsHeader}>Settings</Text>
-      <View style={{ margin: 20, marginTop: 90 }}>
+      <Text
+        style={[
+          AppStyles.screenHeader,
+          AppStyles.margin,
+          AppStyles.absolutePosition,
+        ]}
+      >
+        Settings
+      </Text>
+      <View style={[AppStyles.manageAccountContainer, AppStyles.margin, AppStyles.manageAccountFormSpacing]}>
         <View style={AppStyles.formFieldSpaceBetween}>
           <Text style={AppStyles.errorText}>{errorMessage}</Text>
-          <Text style={AppStyles.formFieldLabelText}>Current Password</Text>
+          <Text style={[AppStyles.formFieldLabelText, AppStyles.leftTextAlign]}>
+            Current Password
+          </Text>
           <TextInput
             style={
               focusCurrentPassword
@@ -105,7 +107,11 @@ export default function ManageAccount({ navigation }) {
             onChangeText={setCurrentPassword}
           />
           <View style={AppStyles.formFieldSpaceBetween}>
-            <Text style={AppStyles.formFieldLabelText}>New Password</Text>
+            <Text
+              style={[AppStyles.formFieldLabelText, AppStyles.leftTextAlign]}
+            >
+              New Password
+            </Text>
             <TextInput
               style={
                 focusNewPassword
@@ -123,7 +129,7 @@ export default function ManageAccount({ navigation }) {
         </View>
         <Button title="Update Password" onPress={updateUserPassword} />
 
-        <View style={AppStyles.outlineManageAccount}>
+        <View>
           <View style={AppStyles.formFieldSpaceBetween}>
             <Button title="Delete User" onPress={deleteUserAndToDos} />
           </View>

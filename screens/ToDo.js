@@ -1,3 +1,5 @@
+//Main dependencies
+import React from "react";
 import {
   View,
   Button,
@@ -8,10 +10,10 @@ import {
   ActivityIndicator,
   FlatList,
   Pressable,
-
 } from "react-native";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 import InlineTextButton from "../components/InlineTextButton";
-import ToDoStyles from "../styles/ToDoStyles";
+//Database
 import { auth, db } from "../firebase";
 import {
   collection,
@@ -23,10 +25,11 @@ import {
   doc,
   setDoc,
 } from "firebase/firestore";
-import { sendEmailVerification, signOut } from "firebase/auth";
-import React from "react";
+import { sendEmailVerification } from "firebase/auth";
+//Components
 import AddToDoModal from "../components/AddToDoModal";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
+//Styles + Images
+import ToDoStyles from "../styles/ToDoStyles";
 
 import wave from "../assets/wave.png";
 import email from "../assets/email-icon.png";
@@ -40,7 +43,6 @@ export default function ToDo({ navigation }) {
   let [isRefreshing, setIsRefreshing] = React.useState(false);
   let [toDos, setToDos] = React.useState([]);
   let [icon, setIcon] = React.useState(true);
-
 
   let loadToDoList = async () => {
     const q = query(
@@ -82,6 +84,7 @@ export default function ToDo({ navigation }) {
         style={[
           ToDoStyles.todoOutline,
           ToDoStyles.rowContainer,
+          ToDoStyles.justifyAndAlign,
           ToDoStyles.rightMargin,
           ToDoStyles.toDoLeftMargin,
         ]}
@@ -120,12 +123,10 @@ export default function ToDo({ navigation }) {
             backgroundColor: "white",
             flexGrow: 0,
           }}
-       
           onRefresh={() => {
             loadToDoList();
             setIsRefreshing(true);
           }}
-          
           renderItem={renderToDoItem}
           keyExtractor={(item) => item.id}
         />
@@ -146,13 +147,19 @@ export default function ToDo({ navigation }) {
         >
           <Pressable onPress={() => navigation.navigate("ManageAccount")}>
             <View style={{ flex: 1 }}>
-              <Image source={settingsBlack} style={ToDoStyles.settingsIcon} />
+              <Image
+                source={settingsBlack}
+                style={[ToDoStyles.settingsIcon, ToDoStyles.iconDimensions]}
+              />
             </View>
           </Pressable>
 
           <Pressable onPress={() => navigation.navigate("Login")}>
             <View style={{ flex: 0 }}>
-              <Image source={logoutIcon} style={ToDoStyles.logoutIcon} />
+              <Image
+                source={logoutIcon}
+                style={[ToDoStyles.logoutIcon, ToDoStyles.iconDimensions]}
+              />
             </View>
           </Pressable>
 
@@ -217,6 +224,7 @@ export default function ToDo({ navigation }) {
       <View
         style={[
           ToDoStyles.rowContainer,
+          ToDoStyles.justifyAndAlign,
           ToDoStyles.rightAligned,
           ToDoStyles.rightMargin,
           ToDoStyles.toDoTopMargin,
@@ -239,15 +247,6 @@ export default function ToDo({ navigation }) {
         />
       </Modal>
 
-      {/* <Pressable onPress={() => navigation.navigate("ManageAccount")}>
-        <View>
-          <Image source={settingsBlack} style={ToDoStyles.settingsIcon} />
-        </View>
-      </Pressable> */}
-
-      {/* <NavigationContainer>
-        <Tabs />
-      </NavigationContainer> */}
       <View
         style={{
           backgroundColor: "red",
@@ -256,10 +255,6 @@ export default function ToDo({ navigation }) {
         }}
       ></View>
 
-      {/* <Text style={[ToDoStyles.toDoHeader, ToDoStyles.todoContainer]}>
-        Welcome{" "}
-      </Text>
-      <Image source={wave} style={ToDoStyles.waveIcon} /> */}
       {auth.currentUser.emailVerified
         ? showContent()
         : showSendVerificationEmail()}

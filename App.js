@@ -1,12 +1,13 @@
-import { StatusBar } from "expo-status-bar";
+//Main dependencies 
 import React from "react";
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+//Screens
 import Main from "./screens/Main";
 import Login from "./screens/Login";
 import SignUp from "./screens/SignUp";
 import ToDo from "./screens/ToDo";
 import ManageAccount from "./screens/ManageAccount";
-import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ResetPassword from "./screens/ResetPassword";
 
 const MyTheme = {
@@ -18,15 +19,7 @@ const MyTheme = {
 };
 
 const Stack = createNativeStackNavigator();
-//  SplashScreen.preventAutoHideAsync();
-// const BottomNavigator = () => {
-//   return (
-//     <bottomNav.Navigator>
-//       <bottomNav.Screen name="Login" component={} />
-//       <bottomNav.Screen name="ManageAccount" component={ManageAccount} />
-//     </bottomNav.Navigator>
-//   );
-// };
+const pink="#ff788b";
 
 export default function App() {
   return (
@@ -46,7 +39,7 @@ export default function App() {
           component={Login}
           title="Login"
           options={{
-            headerTintColor: "#ff788b",
+            headerTintColor: pink,
             headerTitleStyle: {
               color: "black",
             },
@@ -58,8 +51,7 @@ export default function App() {
           component={SignUp}
           title="Create New Account"
           options={{
-            headerShown: true,
-            headerTintColor: "#ff788b",
+            headerTintColor: pink,
             headerTitleStyle: {
               color: "black",
             },
@@ -70,8 +62,7 @@ export default function App() {
           name="ResetPassword"
           component={ResetPassword}
           options={{
-            headerShown: true,
-            headerTintColor: "#ff788b",
+            headerTintColor: pink,
             headerTitleStyle: {
               color: "black",
             },
@@ -82,8 +73,7 @@ export default function App() {
           name="ToDo"
           component={ToDo}
           options={{
-            headerShown: true,
-            headerTintColor: "#ff788b",
+            headerTintColor: pink,
             title: "Metick",
             headerTitleStyle: {
               color: "black",
@@ -96,8 +86,7 @@ export default function App() {
           component={ManageAccount}
           title="Manage Account"
           options={{
-            headerShown: true,
-            headerTintColor: "#ff788b",
+            headerTintColor: pink,
             headerTitleStyle: {
               color: "black",
             },

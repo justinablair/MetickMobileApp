@@ -1,28 +1,20 @@
-import { Text, View, Pressable, TextInput, Image } from "react-native";
-import AppStyles from "../styles/AppStyles";
+//Main dependencies
 import React, { useState } from "react";
+import { Text, View, Pressable, TextInput } from "react-native";
+//Database
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+//Styles
+import AppStyles from "../styles/AppStyles";
 
 export default function Login({ navigation }) {
-  // if (auth.currentUser) {
-  //   navigation.navigate("ToDo");
-  // } else {
-  //   onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       navigation.navigate("ToDo");
-  //     }
-  //   });
-  // }
-
   const [errorMessage, setErrorMessage] = React.useState("");
-
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [focusEmailInput, setFocusEmailInput] = useState(false);
   const [focusPasswordInput, setFocusPasswordInput] = useState(false);
 
-  let login = () => {
+  const login = () => {
     if (email !== "" && password !== "") {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -32,20 +24,40 @@ export default function Login({ navigation }) {
           setPassword("");
         })
         .catch((error) => {
-          setErrorMessage(error.message);
+          if (error.code === "auth/too-many-requests") {
+            setErrorMessage(
+              "Account temporarily disabled due to too many failed login attempts. You can reset your password, or wait 30 minutes."
+            );
+          }
+
+          if (error.code == "auth/invalid-email") {
+            setErrorMessage("Enter valid email address: '@' and text after");
+          }
+          if (error.code == "auth/invalid-email" && "auth/wrong-password") {
+            setErrorMessage("Invalid email or password");
+          }
+          if (error.code == "auth/wrong-password") {
+            setErrorMessage("Password is incorrect");
+          }
+          if (error.code == "auth/internal-error") {
+            setErrorMessage("Complete all fields");
+          }
         });
     } else {
-      setErrorMessage("Please enter an email and password");
+      setErrorMessage("Enter an email and password");
     }
   };
   return (
-    <View style={AppStyles.loginContainer}>
-      <Text style={AppStyles.loginHeader}>Login</Text>
+    <View style={[AppStyles.screenContainer, AppStyles.centerContent]}>
+      <Text style={[AppStyles.screenHeader, AppStyles.absolutePosition]}>
+        Login
+      </Text>
       <Text style={AppStyles.errorText}>{errorMessage}</Text>
       <View style={AppStyles.formFieldSpaceBetween}>
-        <Text style={AppStyles.formFieldLabelText}>Email</Text>
+        <Text style={[AppStyles.formFieldLabelText, AppStyles.leftTextAlign]}>
+          Email
+        </Text>
         <TextInput
-          // style={[AppStyles.textInput]}
           style={
             focusEmailInput ? AppStyles.inputOnFocus : AppStyles.inputOnBlur
           }
@@ -58,7 +70,9 @@ export default function Login({ navigation }) {
       </View>
 
       <View style={AppStyles.formFieldSpaceBetween}>
-        <Text style={AppStyles.formFieldLabelText}>Password</Text>
+        <Text style={[AppStyles.formFieldLabelText, AppStyles.leftTextAlign]}>
+          Password
+        </Text>
         <TextInput
           style={
             focusPasswordInput ? AppStyles.inputOnFocus : AppStyles.inputOnBlur
@@ -72,34 +86,43 @@ export default function Login({ navigation }) {
         />
       </View>
 
-      <Pressable style={AppStyles.continueButton} onPress={login}>
-        <Text style={AppStyles.continueText}>Continue</Text>
+      <Pressable
+        style={[
+          AppStyles.continueButton,
+          AppStyles.absolutePosition,
+          AppStyles.mediumHeight,
+          AppStyles.largeWidth,
+        ]}
+        onPress={login}
+      >
+        <Text
+          style={[
+            AppStyles.continueText,
+            AppStyles.largeWidth,
+            AppStyles.centerContent,
+            AppStyles.absolutePosition,
+          ]}
+        >
+          Continue
+        </Text>
       </Pressable>
 
       <View>
         <Pressable
-          style={{ top: "700%", left: "43%" }}
+          style={AppStyles.signUpInsteadPressable}
           onPress={() => navigation.navigate("SignUp")}
         >
-          <Text style={{ textDecorationLine: "underline" }}>Sign up</Text>
+          <Text style={AppStyles.textUnderline}>Sign up</Text>
         </Pressable>
       </View>
       <View>
         <Pressable
-          style={{ top: "780%", left: "36%" }}
-          onPress={() => navigation.navigate("SignUp")}
+          style={AppStyles.resetPasswordInsteadPressable}
+          onPress={() => navigation.navigate("ResetPassword")}
         >
-          <Text style={{ textDecorationLine: "underline" }}>
-            Reset Password
-          </Text>
+          <Text style={AppStyles.textUnderline}>Reset Password</Text>
         </Pressable>
       </View>
-
-      {/* <InlineTextResetPasswordButton
-        text="Login"
-        style={AppStyles.rowContainer}
-        onPress={login}
-      /> */}
     </View>
   );
 }
