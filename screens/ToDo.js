@@ -2,14 +2,14 @@
 import React from "react";
 import {
   View,
-  Button,
-  Text,
   Modal,
+  Text,
   Image,
-  SafeAreaView,
   ActivityIndicator,
   FlatList,
   Pressable,
+  Button,
+  SafeAreaView,
 } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import InlineTextButton from "../components/InlineTextButton";
@@ -38,18 +38,26 @@ import settingsBlack from "../assets/settings-black.png";
 import logoutIcon from "../assets/log-out.png";
 
 export default function ToDo({ navigation }) {
+  /*  Updates the state of the variables when their corresponding function is called.
+This allows changes to be tracked and saved to memory. */
+
   let [modalVisible, setModalVisible] = React.useState(false);
   let [isLoading, setIsLoading] = React.useState(true);
   let [isRefreshing, setIsRefreshing] = React.useState(false);
-  let [toDos, setToDos] = React.useState([]);
-  let [icon, setIcon] = React.useState(true);
 
+  //The list of todos are saved to an empty array.
+  let [toDos, setToDos] = React.useState([]);
+
+  /* This function queries the database on the selection of todos.
+   userId is checked to match the current users id, to load the correct documents. */
   let loadToDoList = async () => {
     const q = query(
       collection(db, "todos"),
       where("userId", "==", auth.currentUser.uid)
     );
 
+    /*This function waits for the database query to be returned. 
+    Each todos item and its id is pushed to the empty array of toDos */
     const querySnapshot = await getDocs(q);
     let toDos = [];
     querySnapshot.forEach((doc) => {
@@ -58,26 +66,36 @@ export default function ToDo({ navigation }) {
       toDos.push(toDo);
     });
 
+    //The state of the toDos array is updated to be the list of obtained todo items from the database
     setToDos(toDos);
     setIsLoading(false);
     setIsRefreshing(false);
   };
 
+  // If the todoList is loading, show the activity indicator and load the todo list
   if (isLoading) {
     loadToDoList();
   }
 
+  /* This function obtains the id of todo items, so the user can check the checkbox to cross out todos. 
+  This is saved to the database. */
   let checkToDoItem = (item, isChecked) => {
     const toDoRef = doc(db, "todos", item.id);
     setDoc(toDoRef, { completed: isChecked }, { merge: true });
   };
 
+  /* This function is used to delete items from the todo list. The id of the todo that is deleted out is obtained.
+  So that the correct todo is deleted. This is saved to the database */
   let deleteToDo = async (toDoId) => {
     await deleteDoc(doc(db, "todos", toDoId));
+    //Only shows existing todos, filtering out by items that are not deleted.
     let updatedToDos = [...toDos].filter((item) => item.id != toDoId);
+    //Sets the toDo state to be the updated todos.
     setToDos(updatedToDos);
   };
 
+  /* This function is used to render each todo item, so that checked todos are crossed out, and on press
+  of the delete button, the todo is deleted */
   let renderToDoItem = ({ item }) => {
     return (
       <View
@@ -89,6 +107,7 @@ export default function ToDo({ navigation }) {
           ToDoStyles.toDoLeftMargin,
         ]}
       >
+        {/* User can click on text or checkbox to check item off. */}
         <View style={[ToDoStyles.toDoFillSpace, ToDoStyles.todoContainer]}>
           <BouncyCheckbox
             isChecked={item.complated}
@@ -111,29 +130,30 @@ export default function ToDo({ navigation }) {
     );
   };
 
+  // Shows the todo list
   let showToDoList = () => {
     return (
       <View>
         <FlatList
+          // Data supplied is the list of todos.
           data={toDos}
           refreshing={isRefreshing}
-          style={{
-            top: 150,
-            height: 350,
-            backgroundColor: "white",
-            flexGrow: 0,
-          }}
+          style={ToDoStyles.flatListContainer}
+          //Refreshes items and shows load spinner
           onRefresh={() => {
             loadToDoList();
             setIsRefreshing(true);
           }}
           renderItem={renderToDoItem}
+          // Enhances performance, if there are lots of items to render.
           keyExtractor={(item) => item.id}
         />
       </View>
     );
   };
 
+  /*This function shows the data associated with a validated user, 
+  so that the showTodoList() function displays the toDo list and the settings and logout icons are displayed to the user. */
   let showContent = () => {
     return (
       <View>
@@ -142,35 +162,27 @@ export default function ToDo({ navigation }) {
         </Text>
         <Image source={wave} style={ToDoStyles.waveIcon} />
         {isLoading ? <ActivityIndicator size="large" /> : showToDoList()}
-        <View
-          style={{ flexDirection: "row", top: "50%", alignItems: "center" }}
-        >
+        <View style={ToDoStyles.iconAlignment}>
           <Pressable onPress={() => navigation.navigate("ManageAccount")}>
-            <View style={{ flex: 1 }}>
+            <View style={ToDoStyles.toDoFillSpace}>
               <Image
                 source={settingsBlack}
                 style={[ToDoStyles.settingsIcon, ToDoStyles.iconDimensions]}
               />
             </View>
           </Pressable>
-
+          {/* Provides user with the option to log out */}
           <Pressable onPress={() => navigation.navigate("Login")}>
-            <View style={{ flex: 0 }}>
+            <View style={ToDoStyles.toDoZeroFillSpace}>
               <Image
                 source={logoutIcon}
                 style={[ToDoStyles.logoutIcon, ToDoStyles.iconDimensions]}
               />
             </View>
           </Pressable>
-
-          {/* <Button
-            title="Add Metick"
-            onPress={() => setModalVisible(true)}
-            color="#fb4d3d"
-          /> */}
         </View>
         <Pressable
-          style={{ bottom: "80%", left: "40%" }}
+          style={ToDoStyles.addMetickPosition}
           onPress={() => setModalVisible(true)}
         >
           <View>
@@ -182,6 +194,9 @@ export default function ToDo({ navigation }) {
     );
   };
 
+  /*This function shows the content associated with an unvalidated user, 
+  so that the user can only interact with the firebase sendEmailVerification() method,
+   until they verify their account. This prevents any todos being added. */
   let showSendVerificationEmail = () => {
     return (
       <View>
@@ -196,6 +211,7 @@ export default function ToDo({ navigation }) {
         <View style={ToDoStyles.resendEmailButton}>
           <Button
             title="Resend Verification Email"
+            //Sends the authenticated user a new email link
             onPress={() => sendEmailVerification(auth.currentUser)}
           />
         </View>
@@ -203,23 +219,28 @@ export default function ToDo({ navigation }) {
     );
   };
 
+  /* This function shows all the todos added to the database.
+   A shown modal allows the user to add new todo items to the database.
+    All items are rendered from the database. */
   let addToDo = async (todo) => {
     let toDoToSave = {
       text: todo,
       completed: false,
+      //adds user id to the todo item.
       userId: auth.currentUser.uid,
     };
     const docRef = await addDoc(collection(db, "todos"), toDoToSave);
 
     toDoToSave.id = docRef.id;
-
+    //copy of array obtained and saved todos is added to the array.
     let updatedToDos = [...toDos];
     updatedToDos.push(toDoToSave);
-
+    //setTodos renders the added todo.
     setToDos(updatedToDos);
   };
 
   return (
+    //Renders content within the safe area boundaries of a device.
     <SafeAreaView>
       <View
         style={[
@@ -229,16 +250,12 @@ export default function ToDo({ navigation }) {
           ToDoStyles.rightMargin,
           ToDoStyles.toDoTopMargin,
         ]}
-      >
-        {/* <InlineTextButton
-          text="Manage Account"
-          onPress={() => navigation.navigate("ManageAccount")}
-        /> */}
-      </View>
+      ></View>
       <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
+        //For when android back button is pressed
         onRequestClose={() => setModalVisible(false)}
       >
         <AddToDoModal
@@ -247,14 +264,8 @@ export default function ToDo({ navigation }) {
         />
       </Modal>
 
-      <View
-        style={{
-          backgroundColor: "red",
-          position: "absolute",
-          top: 720,
-        }}
-      ></View>
-
+      {/* If the user is verfied showContent() is called.
+       if not, showSendVerificationEmail() is called. */}
       {auth.currentUser.emailVerified
         ? showContent()
         : showSendVerificationEmail()}

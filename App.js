@@ -1,4 +1,4 @@
-//Main dependencies 
+//Main dependencies
 import React from "react";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -19,8 +19,10 @@ const MyTheme = {
 };
 
 const Stack = createNativeStackNavigator();
-const pink="#ff788b";
+const pink = "#ff788b";
 
+/*The Navigation component is used to add each screen to the stack.
+The user can navigate to different screens */
 export default function App() {
   return (
     <NavigationContainer theme={MyTheme}>

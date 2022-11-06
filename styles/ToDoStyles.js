@@ -23,6 +23,12 @@ export default StyleSheet.create({
     margin: 20,
   },
 
+  flatListContainer: {
+    top: 150,
+    height: 350,
+    backgroundColor: "white",
+    flexGrow: 0,
+  },
   /*Text styles */
   header: {
     alignSelf: "center",
@@ -80,6 +86,11 @@ export default StyleSheet.create({
   toDoFillSpace: {
     flex: 1,
   },
+
+  toDoZeroFillSpace: {
+    flex: 0,
+  },
+
   rightAligned: {
     justifyContent: "flex-end",
   },
@@ -102,6 +113,10 @@ export default StyleSheet.create({
 
   resendEmailButton: {
     top: "50%",
+  },
+  addMetickPosition: {
+    bottom: "80%",
+    left: "40%",
   },
 
   todoOutline: {
@@ -134,6 +149,12 @@ export default StyleSheet.create({
   iconDimensions: {
     width: 30,
     height: 30,
+  },
+
+  iconAlignment: {
+    flexDirection: "row",
+    top: "50%",
+    alignItems: "center",
   },
 
   settingsIcon: {
