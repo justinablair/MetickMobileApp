@@ -8,6 +8,8 @@ import Login from "./screens/Login";
 import SignUp from "./screens/SignUp";
 import ToDo from "./screens/ToDo";
 import ManageAccount from "./screens/ManageAccount";
+import ManageDeleteAccount from "./screens/ManageDeleteAccount";
+import ManageUpdatePassword from "./screens/ManageUpdatePassword"
 import ResetPassword from "./screens/ResetPassword";
 
 const MyTheme = {
@@ -87,6 +89,28 @@ export default function App() {
           name="ManageAccount"
           component={ManageAccount}
           title="Manage Account"
+          options={{
+            headerTintColor: pink,
+            headerTitleStyle: {
+              color: "black",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="ManageUpdatePassword"
+          component={ManageUpdatePassword}
+          title="Update Password"
+          options={{
+            headerTintColor: pink,
+            headerTitleStyle: {
+              color: "black",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="ManageDeleteAccount"
+          component={ManageDeleteAccount}
+          title="Delete Account"
           options={{
             headerTintColor: pink,
             headerTitleStyle: {

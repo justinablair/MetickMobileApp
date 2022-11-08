@@ -41,6 +41,7 @@ Matching credentials logs the user in and navigates them to the ToDo.js screen. 
         /* These conditionals are used to validate the input fields.
            The firebase error codes are obtained, and the errorMessage state is updated, to display custom error messages */
         .catch((error) => {
+          setErrorMessage(error.message);
           if (error.code === "auth/too-many-requests") {
             setErrorMessage(
               "Account temporarily disabled due to too many failed login attempts. You can reset your password, or wait 30 minutes."
@@ -58,6 +59,9 @@ Matching credentials logs the user in and navigates them to the ToDo.js screen. 
           }
           if (error.code == "auth/internal-error") {
             setErrorMessage("Complete all fields");
+          }
+          if (error.code == "auth/user-not-found") {
+            setErrorMessage("This account does not exist");
           }
         });
     } else {
@@ -132,6 +136,7 @@ The two inputs have defined placeholders also stating what data the user should 
         <Text
           style={[
             AppStyles.continueText,
+            AppStyles.black,
             AppStyles.largeWidth,
             AppStyles.centerContent,
             AppStyles.absolutePosition,

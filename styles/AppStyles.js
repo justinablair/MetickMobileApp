@@ -23,6 +23,11 @@ export default StyleSheet.create({
   },
 
   manageAccountContainer: {
+    marginTop: 200,
+    marginLeft: 400,
+  },
+
+  manageDeleteAccountContainer: {
     marginTop: 90,
   },
 
@@ -30,6 +35,17 @@ export default StyleSheet.create({
     alignItems: "center",
     backgroundColor: white,
     flex: 1,
+  },
+
+  modalContainer: {
+    borderRadius: 7,
+    borderColor: grey,
+    borderWidth: 1,
+    backgroundColor: white,
+    marginLeft: 75,
+    height: 300,
+    top: 320,
+    width: "60%",
   },
 
   /*Text styles */
@@ -47,6 +63,16 @@ export default StyleSheet.create({
     top: 80,
     width: "100%",
   },
+  modalHeader: {
+    alignSelf: "center",
+    fontSize: 25,
+    fontWeight: "500",
+    marginBottom: 40,
+    paddingLeft: 30,
+    paddingRight: 30,
+    top: 80,
+    textAlign: "center",
+  },
 
   formFieldLabelText: {
     color: black,
@@ -55,9 +81,15 @@ export default StyleSheet.create({
     paddingBottom: 12,
   },
 
+  black: {
+    color: black,
+  },
+  white: {
+    color: white,
+  },
+
   continueText: {
     alignItems: "center",
-    color: white,
     fontSize: 20,
     fontWeight: "700",
     lineHeight: 60,
@@ -73,6 +105,10 @@ export default StyleSheet.create({
   /*Spacing */
   margin: {
     margin: 20,
+  },
+
+  bottomMargin: {
+    marginBottom: 20,
   },
 
   formFieldSpaceBetween: {
@@ -97,9 +133,13 @@ export default StyleSheet.create({
   largeWidth: {
     width: 344,
   },
-  
+
   manageAccountFormSpacing: {
     top: 100,
+  },
+
+  resetPasswordForm: {
+    bottom: 60,
   },
 
   /*Pressable and buttons */
@@ -127,7 +167,13 @@ export default StyleSheet.create({
   resetPasswordContinueButton: {
     borderRadius: 12,
     backgroundColor: pink,
-    top: 480,
+    top: 450,
+  },
+
+  updatePasswordContinueButton: {
+    borderRadius: 12,
+    backgroundColor: pink,
+    top: 170,
   },
 
   inlineTextButton: {
@@ -156,6 +202,21 @@ export default StyleSheet.create({
   pressedInlineTextButton: {
     color: blue,
     opacity: 0.6,
+  },
+
+  exitButton: {
+    bottom: 170,
+    marginLeft: 170,
+  },
+
+  confirmButton: {
+    padding: 15,
+  },
+  deleteButton: {
+    color: "#007AFF",
+    fontSize: 25,
+    left: 160,
+    top: 265,
   },
 
   /*Validation error text */
@@ -190,5 +251,12 @@ export default StyleSheet.create({
   notificationIcon: {
     marginBottom: 400,
     marginLeft: 22,
+  },
+
+  images: {
+    height: 50,
+    width: 50,
+    top: 60,
+    marginLeft: 95,
   },
 });

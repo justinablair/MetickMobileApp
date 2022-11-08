@@ -20,7 +20,7 @@ This allows user changes to be tracked and saved to memory. */
         ToDoStyles.toDoFillSpace,
       ]}
     >
-      <Text style={ToDoStyles.modalHeader}>Write a new Metick</Text>\ /*This
+      <Text style={ToDoStyles.modalHeader}>Write a new Metick</Text>
       {/* This ternary is used to change style of the input field the user interacts
       with, showing the user pressed and unpressed states. */}
       <TextInput

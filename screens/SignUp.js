@@ -6,7 +6,6 @@ import { auth } from "../firebase";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
-  SignInMethod,
 } from "firebase/auth";
 //Styles
 import AppStyles from "../styles/AppStyles";
@@ -41,6 +40,7 @@ showing the user pressed and unpressed states */
     }
     //Updates text input value.
     setValue(value);
+    // setValidationMessage("")
   };
 
   /* This function validates the text input fields. 
@@ -57,6 +57,7 @@ The user is then navigated to the ToDo.js screen. */
           sendEmailVerification(auth.currentUser);
           navigation.navigate("ToDo", { user: userCredential.user });
           setValidationMessage("");
+            setValidationMessage("");
         })
         .catch((error) => {
           if (error.code == "auth/invalid-email") {
@@ -78,7 +79,7 @@ The user is then navigated to the ToDo.js screen. */
           }
         });
     } else {
-      setValidationMessage("Please enter an email address and password");
+      setValidationMessage("Complete all fields");
     }
   };
   return (

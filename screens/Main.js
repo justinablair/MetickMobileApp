@@ -39,6 +39,7 @@ export default function Main({ navigation }) {
         <Text
           style={[
             AppStyles.continueText,
+            AppStyles.white,
             AppStyles.centerContent,
             AppStyles.absolutePosition,
             AppStyles.largeWidth,

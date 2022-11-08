@@ -28,8 +28,10 @@ import {
 import { sendEmailVerification } from "firebase/auth";
 //Components
 import AddToDoModal from "../components/AddToDoModal";
+import ConfirmationModal from "../components/ConfirmationModal";
 //Styles + Images
 import ToDoStyles from "../styles/ToDoStyles";
+import Celebrate from "../assets/celebrate.png";
 
 import wave from "../assets/wave.png";
 import email from "../assets/email-icon.png";
@@ -40,7 +42,7 @@ import logoutIcon from "../assets/log-out.png";
 export default function ToDo({ navigation }) {
   /*  Updates the state of the variables when their corresponding function is called.
 This allows changes to be tracked and saved to memory. */
-
+let [confirmationModalVisible,setConfirmationModalVisible]=React.useState(false);
   let [modalVisible, setModalVisible] = React.useState(false);
   let [isLoading, setIsLoading] = React.useState(true);
   let [isRefreshing, setIsRefreshing] = React.useState(false);
@@ -139,7 +141,7 @@ This allows changes to be tracked and saved to memory. */
           data={toDos}
           refreshing={isRefreshing}
           style={ToDoStyles.flatListContainer}
-          //Refreshes items and shows load spinner
+          // Refreshes items and shows load spinner
           onRefresh={() => {
             loadToDoList();
             setIsRefreshing(true);
@@ -193,7 +195,6 @@ This allows changes to be tracked and saved to memory. */
       </View>
     );
   };
-
   /*This function shows the content associated with an unvalidated user, 
   so that the user can only interact with the firebase sendEmailVerification() method,
    until they verify their account. This prevents any todos being added. */
@@ -203,22 +204,42 @@ This allows changes to be tracked and saved to memory. */
         <View style={ToDoStyles.todoContainer}>
           <Text style={[ToDoStyles.toDoHeader]}>Verify Your Email</Text>
           <Image source={email} style={ToDoStyles.emailIcon} />
-
           <Text style={ToDoStyles.verifyEmailHeader}>
             We've sent you a verification link so you can start using Metick
           </Text>
         </View>
         <View style={ToDoStyles.resendEmailButton}>
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={confirmationModalVisible}
+            //For when android back button is pressed
+            onRequestClose={() => setConfirmationModalVisible(false)}
+          >
+            {/* Modal used to show the user success message */}
+            <ConfirmationModal
+              title="We've emailed you a verification link!"
+              text=""
+              image={Celebrate}
+              onClose={() => {
+                setConfirmationModalVisible(false),
+                  navigation.navigate("Login");
+              }}
+            />
+          </Modal>
+
           <Button
             title="Resend Verification Email"
             //Sends the authenticated user a new email link
-            onPress={() => sendEmailVerification(auth.currentUser)}
+            onPress={() => {
+              sendEmailVerification(auth.currentUser),
+                setConfirmationModalVisible(true);
+            }}
           />
         </View>
       </View>
     );
   };
-
   /* This function shows all the todos added to the database.
    A shown modal allows the user to add new todo items to the database.
     All items are rendered from the database. */
