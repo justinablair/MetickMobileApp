@@ -1,6 +1,6 @@
 //Main dependencies
 import React from "react";
-import { Button, View, TextInput, Text, Modal } from "react-native";
+import { Button, View, Text} from "react-native";
 //Database
 import { auth } from "../firebase";
 

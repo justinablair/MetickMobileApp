@@ -43,7 +43,7 @@ On successful deletion the user is navigated to the first screen in the stack: M
       .then((userCredential) => {
         const user = userCredential.user;
         // The writeBatch method deletes all todos from the database.
-        let batch = writeBatch(db);
+        const batch = writeBatch(db);
         const q = query(
           collection(db, "todos"),
           where("userId", "==", user.uid)

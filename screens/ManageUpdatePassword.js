@@ -2,7 +2,7 @@
 import React from "react";
 import { Pressable, View, TextInput, Text, Modal } from "react-native";
 //Database
-import { auth, db } from "../firebase";
+import { auth } from "../firebase";
 import {
   collection,
   query,
@@ -14,8 +14,6 @@ import {
   signOut,
   updatePassword,
   signInWithEmailAndPassword,
-  deleteUser,
-  SignInMethod,
 } from "firebase/auth";
 //Components
 import ConfirmationModal from "../components/ConfirmationModal";
@@ -34,7 +32,7 @@ This allows changes to be tracked and saved to memory. */
   const [errorMessage, setErrorMessage] = React.useState("");
   const [currentPassword, setCurrentPassword] = React.useState("");
   const [newPassword, setNewPassword] = React.useState("");
-  let [modalVisible, setModalVisible] = React.useState(false);
+  const [modalVisible, setModalVisible] = React.useState(false);
 
   /*This state is used to toggle the border colour of the input field the user interacts with, 
 showing the user pressed and unpressed states */

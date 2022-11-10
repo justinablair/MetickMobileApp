@@ -1,6 +1,6 @@
 //Main dependencies
-import { View, Text, TextInput, Button, Image } from "react-native";
-import React, { useState } from "react";
+import { View, Text, Button, Image } from "react-native";
+import React from "react";
 //Styles
 import AppStyles from "../styles/AppStyles";
 

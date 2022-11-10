@@ -42,17 +42,18 @@ import logoutIcon from "../assets/log-out.png";
 export default function ToDo({ navigation }) {
   /*  Updates the state of the variables when their corresponding function is called.
 This allows changes to be tracked and saved to memory. */
-let [confirmationModalVisible,setConfirmationModalVisible]=React.useState(false);
-  let [modalVisible, setModalVisible] = React.useState(false);
-  let [isLoading, setIsLoading] = React.useState(true);
-  let [isRefreshing, setIsRefreshing] = React.useState(false);
+  const [confirmationModalVisible, setConfirmationModalVisible] =
+    React.useState(false);
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [isRefreshing, setIsRefreshing] = React.useState(false);
 
   //The list of todos are saved to an empty array.
-  let [toDos, setToDos] = React.useState([]);
+  const [toDos, setToDos] = React.useState([]);
 
   /* This function queries the database on the selection of todos.
    userId is checked to match the current users id, to load the correct documents. */
-  let loadToDoList = async () => {
+  const loadToDoList = async () => {
     const q = query(
       collection(db, "todos"),
       where("userId", "==", auth.currentUser.uid)
@@ -61,9 +62,9 @@ let [confirmationModalVisible,setConfirmationModalVisible]=React.useState(false)
     /*This function waits for the database query to be returned. 
     Each todos item and its id is pushed to the empty array of toDos */
     const querySnapshot = await getDocs(q);
-    let toDos = [];
+    const toDos = [];
     querySnapshot.forEach((doc) => {
-      let toDo = doc.data();
+      const toDo = doc.data();
       toDo.id = doc.id;
       toDos.push(toDo);
     });
@@ -81,24 +82,24 @@ let [confirmationModalVisible,setConfirmationModalVisible]=React.useState(false)
 
   /* This function obtains the id of todo items, so the user can check the checkbox to cross out todos. 
   This is saved to the database. */
-  let checkToDoItem = (item, isChecked) => {
+  const checkToDoItem = (item, isChecked) => {
     const toDoRef = doc(db, "todos", item.id);
     setDoc(toDoRef, { completed: isChecked }, { merge: true });
   };
 
   /* This function is used to delete items from the todo list. The id of the todo that is deleted out is obtained.
   So that the correct todo is deleted. This is saved to the database */
-  let deleteToDo = async (toDoId) => {
+  const deleteToDo = async (toDoId) => {
     await deleteDoc(doc(db, "todos", toDoId));
     //Only shows existing todos, filtering out by items that are not deleted.
-    let updatedToDos = [...toDos].filter((item) => item.id != toDoId);
+    const updatedToDos = [...toDos].filter((item) => item.id != toDoId);
     //Sets the toDo state to be the updated todos.
     setToDos(updatedToDos);
   };
 
   /* This function is used to render each todo item, so that checked todos are crossed out, and on press
   of the delete button, the todo is deleted */
-  let renderToDoItem = ({ item }) => {
+  const renderToDoItem = ({ item }) => {
     return (
       <View
         style={[
@@ -133,7 +134,7 @@ let [confirmationModalVisible,setConfirmationModalVisible]=React.useState(false)
   };
 
   // Shows the todo list
-  let showToDoList = () => {
+  const showToDoList = () => {
     return (
       <View>
         <FlatList
@@ -156,7 +157,7 @@ let [confirmationModalVisible,setConfirmationModalVisible]=React.useState(false)
 
   /*This function shows the data associated with a validated user, 
   so that the showTodoList() function displays the toDo list and the settings and logout icons are displayed to the user. */
-  let showContent = () => {
+  const showContent = () => {
     return (
       <View>
         <Text style={[ToDoStyles.toDoHeader, ToDoStyles.todoContainer]}>
@@ -198,7 +199,7 @@ let [confirmationModalVisible,setConfirmationModalVisible]=React.useState(false)
   /*This function shows the content associated with an unvalidated user, 
   so that the user can only interact with the firebase sendEmailVerification() method,
    until they verify their account. This prevents any todos being added. */
-  let showSendVerificationEmail = () => {
+  const showSendVerificationEmail = () => {
     return (
       <View>
         <View style={ToDoStyles.todoContainer}>
@@ -243,8 +244,8 @@ let [confirmationModalVisible,setConfirmationModalVisible]=React.useState(false)
   /* This function shows all the todos added to the database.
    A shown modal allows the user to add new todo items to the database.
     All items are rendered from the database. */
-  let addToDo = async (todo) => {
-    let toDoToSave = {
+  const addToDo = async (todo) => {
+    const toDoToSave = {
       text: todo,
       completed: false,
       //adds user id to the todo item.
@@ -254,7 +255,7 @@ let [confirmationModalVisible,setConfirmationModalVisible]=React.useState(false)
 
     toDoToSave.id = docRef.id;
     //copy of array obtained and saved todos is added to the array.
-    let updatedToDos = [...toDos];
+    const updatedToDos = [...toDos];
     updatedToDos.push(toDoToSave);
     //setTodos renders the added todo.
     setToDos(updatedToDos);

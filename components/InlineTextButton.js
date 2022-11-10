@@ -7,7 +7,7 @@ import ToDoStyles from "../styles/ToDoStyles";
 Props is passed in so that onPress the user can later navigate,
 to another screen */
 export default function InlineTextButton(props) {
-  let style = {};
+  const style = {};
   if (props.color) {
     style.color = props.color;
   }

@@ -6,7 +6,6 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 //Styles
 import AppStyles from "../styles/AppStyles";
-import { updateDoc } from "firebase/firestore";
 
 /*This function checks the user’s inputted data against the firebase database credentials. 
  Failed validation displays error messages.

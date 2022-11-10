@@ -20,7 +20,7 @@ export default function ResetPassword({ navigation }) {
   /*Updates the state of the variables when their corresponding function is called.
 This allows changes to be tracked and saved to memory.  */
   const [email, setEmail] = React.useState("");
-  let [modalVisible, setModalVisible] = React.useState(false);
+  const [modalVisible, setModalVisible] = React.useState(false);
   /*This state is used to toggle the border colour of the input field the user interacts with, 
 showing the user pressed and unpressed states */
   const [resetPasswordFocus, setResetPasswordFocus] = React.useState("");
@@ -31,7 +31,7 @@ showing the user pressed and unpressed states */
   This is to validate the credentials. 
   When validation fails, firebase error messages are obtained, and custom error messages displayed.
   When credentials are valid the user is navigated to the top of the stack: Main.js */
-  let resetPassword = () => {
+  const resetPassword = () => {
     sendPasswordResetEmail(auth, email)
       .then(() => {
         setModalVisible(true);

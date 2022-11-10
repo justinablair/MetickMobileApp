@@ -10,7 +10,7 @@ The Cancel button closes the modal. */
 export default function AddToDoModal(props) {
   /*Updates variable state when the corresponding function is called.
 This allows user changes to be tracked and saved to memory. */
-  let [todo, setTodo] = React.useState("");
+  const [todo, setTodo] = React.useState("");
   const [focusTodo, setFocusTodo] = useState(false);
   return (
     <View

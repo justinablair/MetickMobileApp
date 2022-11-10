@@ -36,7 +36,7 @@ showing the user pressed and unpressed states */
     If they do not match a error message is displayed */
   const validateAndSet = (value, valueToCompare, setValue) => {
     if (value !== valueToCompare) {
-      setValidationMessage("Passwords do not match");
+     setValidationMessage("Passwords do not match");
     }
     //Updates text input value.
     setValue(value);
