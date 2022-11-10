@@ -33,7 +33,7 @@ The application is designed for iOS.
 -------------------Further info------------------- 
 
 A full detailed demonstration of this working live application while describing  file structure and functionality 
-can be seen in this video:
+can be seen in this video: https://youtu.be/WPZIXK0EOLY
 
 
 The github repo can be found here: https://github.com/justinablair/MetickMobileApp
