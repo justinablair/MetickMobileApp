@@ -16,6 +16,8 @@ There are three components: addToDoModal.js, confirmationModal.js & inlineTextBu
 
 
 -------------------Running the app------------------- 
+
+
 To see the application demo, install expo in Visual Studio Code, and Xcode.
 
 Run the iPhone 14 pro xcode simulator.
